@@ -17,6 +17,7 @@ namespace StudentCoursesSystem.Repository
             return await _context.SaveChangesAsync();
         }
 
+        //Course related to a particular student
         public Student? getAll(int studentId)
         {
             if(_context == null)
@@ -31,6 +32,7 @@ namespace StudentCoursesSystem.Repository
 
         }
 
+        //Student related to a particular Course
         public Course getStudentByCourse(int id)
         {
             var result = _context?.Courses?.Where(x => x.Id == id)
