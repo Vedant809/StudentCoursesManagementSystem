@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Http;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using StudentCoursesSystem.DTOs;
 using StudentCoursesSystem.Entities;
@@ -8,6 +9,7 @@ namespace StudentCoursesSystem.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
+    
     public class EmployeeProjectController : ControllerBase
     {
         private readonly IEmployeeProjectService _service;
@@ -15,6 +17,8 @@ namespace StudentCoursesSystem.Controllers
         {
             _service = service;
         }
+
+        [Authorize(Roles = "Admin")]
         [HttpGet("GetEmployee")]
         public IActionResult getEmp()
         {
@@ -38,11 +42,19 @@ namespace StudentCoursesSystem.Controllers
             return Ok(result);
         }
 
+        [Authorize(Roles = "Supplier")]
         [HttpGet("GetEmployeeById")]
         public IActionResult get(int empId)
         {
-            var result = _service.GetEmployeeById(empId);
-            return Ok(result);
+            try
+            {
+                var result = _service.GetEmployeeById(empId);
+                return Ok(result);
+            }
+            catch(Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
         }
     }
 }

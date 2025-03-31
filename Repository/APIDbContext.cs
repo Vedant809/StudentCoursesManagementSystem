@@ -1,9 +1,11 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
+using Microsoft.AspNetCore.Identity;
+using Microsoft.EntityFrameworkCore;
 using StudentCoursesSystem.Entities;
 
 namespace StudentCoursesSystem.Repository
 {
-    public class APIDbContext:DbContext
+    public class APIDbContext: IdentityDbContext<IdentityUser>
     {
         public APIDbContext(DbContextOptions<APIDbContext> options) : base(options)
         {
